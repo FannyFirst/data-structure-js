@@ -1,4 +1,4 @@
-//先进先出
+//后进先出
 let Stack = function () {
     this.elements = [];
     //push
