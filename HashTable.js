@@ -1,88 +1,250 @@
 //HashTable
 let MathTools = function () {
-    let primeNumberHashTable;
+    // let primeNumberHashTable;
+    this.limit = 4294967296;//2^15  = 32768 2^16 = 65536 2^23 = 8388608 2^19 = 524288
+    this.primeNumber = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37];
 
-    MathTools.prototype.nearPrimeNumber = function (number, limit = 999999) {
-        //1.  use the number to find a small prime number in primeNumberHashTable than this number,
-        //      then ues function blow text find the most near prime number with number ,save the number to primeNumberHashTable;
-
-        let isPrimeNumber = function (num) {
-            /*
-            * 1     2       3     4     5     6      7       11
-            *
-            * */
-
-
-        }
+    MathTools.prototype.pow = function (x, y) {
+        if (y > 512) return false;
+        if (!y) return 1;
+        if (!(y - 1)) return x;
+        return this.pow(x, y - 1) * x;
     };
 
-    let isPrimeNumber = function (num) {
-        //pm
-        //5
+    MathTools.prototype.log2x = function (x) {
+        return Math.log(x) / Math.log(2);
+    };
+
+    MathTools.prototype.nearPrimeNumber = function (number) {
+        while (number++) {
+            if (number >= this.limit) throw new Error(`over max number:${this.limit},if you want more lager number use setMaxPrimeNumber function to set new limit number`);
+            if (this.isPrimeNumber(number)) return number;
+        }
+    };
+    MathTools.prototype.nearPrimeNumberForward = function (number) {
+        while (number--) {
+            if (number >= this.limit) throw new Error(`over max number:${this.limit},if you want more lager number use setMaxPrimeNumber function to set new limit number`);
+            if (this.isPrimeNumber(number)) return number;
+        }
+    };
+    MathTools.prototype.setMaxPrimeNumber = function (limit) {
+        this.limit = limit;
+    };
+    MathTools.prototype.isPrimeNumber = function (num) {
+
         if (num <= 1) return false;
         if (num <= 5) return num !== 4;
-        let primeNumber = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
-        for (let i = 5; i < num; i++) {
-            for (let j = 0; j < primeNumber.length; j++) {
-                if (num === primeNumber[j]) break;
-                if (!(num % primeNumber[j])) return false;
+        let i, j, tag = 0, primeLen = this.primeNumber.length;
+
+        for (j = 0; j < this.primeNumber.length; j++) {      //预查找
+            if (num === this.primeNumber[j]) return true;
+            if (!(num % this.primeNumber[j])) return false;  //被字典中质数整除不是质数
+        }
+
+        if (this.primeNumber[this.primeNumber.length - 1] * this.primeNumber[this.primeNumber.length - 1] < num) {
+            //字典最后一位数字的平方小于num
+
+            i = this.primeNumber[this.primeNumber.length - 1];
+
+            while (i++) {   //找一个质数，其平方大于num    i   从字典中最后一位开始 tag = 0;
+                tag = 0;
+                for (j = 0; j < (this.primeNumber.length / 2) + 1; j++) {
+                    if (!(i % this.primeNumber[j])) {
+                        tag = 1;        //被字典中某一质数整除，标记
+                        break;
+                    }
+                }
+                if (tag) continue;  //被标记跳过
+                this.primeNumber.push(i);
+                if (i * i > num) break;
             }
+            if (this.primeNumber.length > primeLen)
+                for (j = 0; j < this.primeNumber.length; j++) {      //再查找
+                    if (num === this.primeNumber[j]) return true;
+                    if (!(num % this.primeNumber[j])) return false;  //被字典中质数整除不是质数
+                }
         }
         return true;
-    }
+    };
+
 };
-let isPrimeNumber = function (num) {
-    //pm
-    //5
-    if (num <= 1) return false;
-    if (num <= 5) return num !== 4;
-    let primeNumber = [2, 3, 5, 7, 11, 13, 17, 19, 23], i, j, tag = 0,primeLen = primeNumber.length;
+String.prototype.splitByLen = function (len) {
 
-    for (j = 0; j < primeNumber.length; j++) {      //预查找
-        if (!(num % primeNumber[j])) return false;  //被字典中质数整除不是质数
+    if (typeof len !== "number" || len > this.length || len <= 1) return this.toString();
+    let long = this.length % len, eachShort = (this.length - long) / len, result = [], count = 0,
+        j = 0;
+    for (let i = 0; i < len; i++) {
+        result[i] = "";
+        if (long) {
+            long--;
+            for (j = 0; j <= eachShort; j++) {
+                result[i] += this[count++];
+            }
+        } else {
+            for (j = 0; j < eachShort; j++) {
+                result[i] += this[count++];
+            }
+        }
     }
+    return result;
+};
 
-    if (primeNumber[primeNumber.length - 1] * primeNumber[primeNumber.length - 1] < num) {
-        //字典最后一位数字的平方小于num
 
-        i = primeNumber[primeNumber.length - 1];
+let HashTable = function () {
+    this.storage = [];
+    this.size = 8;     //2^4   0000 16  2^5 0000    0000    32
+    this.maxSize = 32768;
+    this.usedSize = 0;
+    this.loadFactor = 0.75;
+    this.modCount = 0;
+    this.nullKey = null;
+    // let bucket = [];
+    let math = new MathTools();
 
-        while (i++) {   //找一个质数，其平方大于num    i   从字典中最后一位开始 tag = 0;
-            tag = 0;
-            for (j = 0; j < (primeNumber.length / 2) + 1; j++) {
-                if (!(i % primeNumber[j])) {
-                    tag = 1;        //被字典中某一质数整除，标记
-                    break;
+    this.realFactor = 0;
+
+    this.threshold = this.loadFactor * this.size;          //阈值
+
+
+    HashTable.prototype.resize = function () {
+        if (this.size > this.maxSize) return;
+        let temp = [], tempSize = this.size * 2, hashIndex = 0;
+        temp[tempSize - 1] = undefined;
+        this.usedSize = 0;
+        for (let i = 0; i < this.size; i++) {
+            if (this.storage[i]) {
+                for (let j = 0; j < this.storage[i].length; j++) {
+                    hashIndex = this.hashFunction(this.storage[i][j][0], this.size * 2);
+                    if (!temp[hashIndex]) {
+                        temp[hashIndex] = [];
+                        this.usedSize++;
+                    }
+                    temp[hashIndex].push(this.storage[i][j]);
                 }
             }
-            if (tag) continue;  //被标记跳过
-            primeNumber.push(i);
-            if (i * i > num) break;
         }
-        if(primeNumber.length>primeLen)
-        for (j = 0; j < primeNumber.length; j++) {      //再查找
-            if (!(num % primeNumber[j])) return false;  //被字典中质数整除不是质数
+        this.realFactor = this.usedSize / this.size;
+        this.threshold = this.loadFactor * this.size;
+        this.size = tempSize;
+        this.storage = temp;
+    };
+
+    HashTable.prototype.put = function (key, value) {
+        if (!this.storage.length) this.storage[this.size - 1] = undefined;
+        //扩容
+        if (this.realFactor * this.size >= this.threshold) {
+            this.resize();
         }
+        this.modCount++;
+
+        if (!key) {
+            this.nullKey = value;
+            this.usedSize++;
+            return true;
+        }
+        let index = this.hashFunction(key);
+
+        if (!this.storage[index])
+            this.storage[index] = [];
+        if (this.storage[index].length > 0)
+            for (let i = 0; i < this.storage[index].length; i++) {
+                if (this.storage[index][i][0] === key) {
+                    this.storage[index][i][1] = value;
+                    return true;
+                }
+            }
+        else this.usedSize++;
+        this.storage[index].push([key, value]);
+        this.realFactor = this.usedSize / this.size;
+        return true;
+    };
+
+
+    HashTable.prototype.hashFunction = function (key, length = this.size) {
+        while (key.length < math.log2x(length)) {
+            key += this.hashCode(key);
+        }
+        let result = 0b1, len = math.log2x(length), group = key.toString().splitByLen(len);
+
+        //get each hashCode
+        for (let i = 0; i < len; i++) {
+            result += (this.hashCode(group[i]) % 2 ? 1 : 0) * math.pow(2, i);
+        }
+
+        return result - 1;
+    };
+    HashTable.prototype.hashCode = function (key) {
+        key = key.toString();
+        let code = 0x0, temp = -1, beforePrimeNumber = null, afterPrimeNumber = null;
+        for (let i = 0; i < key.length; i++) {
+            temp = key.charCodeAt(i) << 5;
+            beforePrimeNumber = math.nearPrimeNumberForward(temp);
+            afterPrimeNumber = math.nearPrimeNumber(temp);
+            code ^= ((beforePrimeNumber << 7 ^ afterPrimeNumber << 5) << 3) ^ temp;
+        }
+        code ^= (code >>> 20) ^ (code >>> 12);
+        return code ^ (code >>> 7) ^ (code >>> 4);
+    };
+    HashTable.prototype.get = function (key) {
+        if (!key) return this.nullKey;
+        let index = this.hashFunction(key.toString());
+        if (this.storage[index]) {
+            for (let i = 0; i < this.storage[index].length; i++) {
+                if (this.storage[index][i][0] === key) return this.storage[index][i][1];
+            }
+        }
+        return false;
+    };
+    HashTable.prototype.remove = function (key) {
+        let temp;
+        if (!key) {
+            temp = this.nullKey;
+            this.nullKey = null;
+            return temp;
+        }
+        let index = this.hashFunction(key.toString());
+        if (this.storage[index]) {
+            for (let i = 0; i < this.storage[index].length; i++) {
+                if (this.storage[index][i][0] === key) {
+                    temp = this.storage[index][i][1];
+                    this.storage[index][i] = null;
+                    this.modCount++;
+                    return temp;
+                }
+            }
+        }
+        return false;
     }
-    return primeNumber;
 };
 
 
 //test
 
-/*console.log(isPrimeNumber(5));
-console.log(isPrimeNumber(17));*/
-// console.log(isPrimeNumber(9007199254740991));
-// console.log(isPrimeNumber(900719923));
-//console.log(isPrimeNumber(3812843));
-// console.log(isPrimeNumber(843));
+/*console.log(math.nearPrimeNumber(129));
+console.log(math.primeNumber);*/
 
-let test = isPrimeNumber(900719923),temp = 0,storage = [],moreTen = [];
+//hashTable
 
-for(let i = 0 ; i< test.length;i++){
-    temp = test[i+1]-test[i];
-    if(temp>9)moreTen.push([test[i],test[i+1]]);
-    storage.push(test[i+1]-test[i]);
-}
-console.log(storage);
-console.log(moreTen);
+let hashTab = new HashTable();
+hashTab.put("test", "qw");
+hashTab.put("a", "asd");
+hashTab.put("s", "s");
+hashTab.put("c", "s");
+hashTab.put("gw", "as");
+hashTab.put("as", "as");
+hashTab.put("faw", "as");
+hashTab.put("tykpo", "as");
+hashTab.put("466", "as");
+hashTab.put("j3q4i2h", "as");
+hashTab.put("qera;mkgqo5uo", "as");
+hashTab.put("qw4etrg59+", "as");
+hashTab.put(null, "a");
+hashTab.put("qwed", "a");
+console.log(hashTab);
+
+console.log(hashTab.get("qwed"));
+console.log(hashTab.get("tykpo"));
+
+console.log(hashTab.remove("qera;mkgqo5uo"));
+
+console.log(hashTab);
