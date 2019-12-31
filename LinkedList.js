@@ -10,7 +10,7 @@ let LinkedList = function () {
         this.length++;
         if (!this.head) {
             this.head = newNode;
-            return;
+            return this.head;
         }
         let current = this.head;
         while (current) {
@@ -18,27 +18,30 @@ let LinkedList = function () {
                 current = current.next;
             } else {
                 current.next = newNode;
-                return;
+                return this.head;
             }
         }
     };
-    LinkedList.prototype.removeAt = function (position) {
-        if (this.isEmpty()) return false;
-        let count = 0, current = this.head;
+    LinkedList.prototype.removeAt = function (position = 0) {
+        if (this.isEmpty()) return undefined;
+        let count = 0, current = this.head, result = null;
         if (!position) {
+            result = this.head.data;
             this.head = this.head.next;
             this.length--;
-            return true;
+            return result;
         }
         while (current.next) {
             if (position - 1 === count) {
 
                 if (current.next.next)
                     current.next = current.next.next;
-                else
+                else {
+                    result = current.next.data;
                     current.next = null;
+                }
                 this.length--;
-                return true;
+                return result;
             } else {
                 current = current.next;
                 count++;
@@ -47,14 +50,17 @@ let LinkedList = function () {
     };
     LinkedList.prototype.remove = function (data) {
         if (this.isEmpty()) return undefined;
-        let current = this.head, count = 0;
+        let current = this.head, count = 0, result = null;
         while (current.next) {
             if (current.next.data === data) {
                 if (current.next.next)
                     current.next = current.next.next;
-                else
+                else {
+                    result = current.next;
                     current.next = null;
+                }
                 this.length--;
+                return result;
             } else {
                 current = current.next;
                 count++;
@@ -70,7 +76,7 @@ let LinkedList = function () {
                 newNode.next = current.next;
                 current.next = newNode;
                 this.length++;
-                return true;
+                return this.head;
             } else {
                 current = current.next;
                 count++;
@@ -96,7 +102,7 @@ let LinkedList = function () {
         while (current) {
             if (count === position) {
                 current.data = data;
-                return;
+                return this.head;
             } else {
                 current = current.next;
                 count++;
@@ -126,7 +132,7 @@ let LinkedList = function () {
 
 //test
 
-let linkedlist = new LinkedList();
+/*let linkedlist = new LinkedList();
 linkedlist.append(1);
 linkedlist.append(2);
 linkedlist.append(3);
@@ -150,4 +156,4 @@ linkedlist.update(2,15);
 console.log(linkedlist);
 
 console.log(linkedlist.indexOf(15));
-console.log(linkedlist.size());
+console.log(linkedlist.size());*/

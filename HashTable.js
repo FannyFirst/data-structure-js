@@ -218,10 +218,10 @@ let HashTable = function () {
 };
 
 
-//test
+/*//test
 
-/*console.log(math.nearPrimeNumber(129));
-console.log(math.primeNumber);*/
+/!*console.log(math.nearPrimeNumber(129));
+console.log(math.primeNumber);*!/
 
 //hashTable
 
@@ -247,4 +247,4 @@ console.log(hashTab.get("tykpo"));
 
 console.log(hashTab.remove("qera;mkgqo5uo"));
 
-console.log(hashTab);
+console.log(hashTab);*/

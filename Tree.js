@@ -1,16 +1,12 @@
 //binary tree
 let BinaryTree = function () {
+
     this.root = null;
-    this.maxDegree = 0;
-    this.depth = 0;
-    this.leftWeight = 0;    //depth * key
-    this.rightWeight = 0;
 
-
-    let treeNode = function (key, value, node = null) {
+    let treeNode = function (key, value) {
         this.key = key;
         this.value = value;
-        this.parentNode = node;
+        this.parentNode = null;
         this.left = null;
         this.right = null;
     }, insertTraversalNode = function (node, key) {
@@ -73,10 +69,10 @@ let BinaryTree = function () {
         let tempLeft = null, tempRight = null;
 
         if (now.right && now.left) {
-            tempLeft = this.maxNode(now.left);      //13
-            tempRight = this.minNode(now.right);       //15
-            if (tempRight.key + tempLeft.key < key + key) {     //28>10+10
-                if (tempLeft.parentNode.right.key === tempLeft.key) {   //!=
+            tempLeft = this.maxNode(now.left);
+            tempRight = this.minNode(now.right);
+            if (tempRight.key + tempLeft.key < key + key) {
+                if (tempLeft.parentNode.right.key === tempLeft.key) {
                     tempLeft.parentNode.right = tempLeft.left;
                 } else {
                     tempLeft.parentNode.left = tempLeft.left;
@@ -125,12 +121,14 @@ let BinaryTree = function () {
 
     BinaryTree.prototype.preOrderTraversalTree = function (node = this.root, callback) {
         const now = this.minNode(node);
+        //TODO
     };
     BinaryTree.prototype.inOrderTraversalTree = function (node = this.root, callback) {
-
+        //TODO
     };
     BinaryTree.prototype.postOrderTraversalTree = function (node = this.root, callback) {
         const now = this.maxNode(node);
+        //TODO
     };
     BinaryTree.prototype.minNode = function (node = this.root) {
         if (!node) return false;
@@ -145,7 +143,7 @@ let BinaryTree = function () {
 
 
 };
-//test
+/*//test
 let bt = new BinaryTree();
 
 bt.insert(21,21);
@@ -166,7 +164,7 @@ bt.insert(23,23);
 bt.insert(35,35);
 bt.insert(33,33);
 
-/*console.log(bt);
+/!*console.log(bt);
 
 console.log(bt.search(20));
 console.log(bt.search(14));
@@ -174,8 +172,8 @@ console.log(bt.search(30));
 console.log(bt.search(55));
 
 console.log(bt.minNode());
-console.log(bt.maxNode());*/
+console.log(bt.maxNode());*!/
 
 bt.remove(25);
-console.log(bt);
+console.log(bt);*/
 

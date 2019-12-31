@@ -1,7 +1,6 @@
 //后进先出
 let Stack = function () {
     this.elements = [];
-    //push
     Stack.prototype.push = function (element) {
         this.elements.push(element);
     };
@@ -22,6 +21,7 @@ let Stack = function () {
 };
 
 //test
+/*
 let stack = new Stack();
 console.log(stack);
 stack.push(1);
@@ -35,4 +35,4 @@ console.log(stack.pop());
 
 console.log(stack.frontFace());
 
-console.log(stack.isEmpty());
+console.log(stack.isEmpty());*/
