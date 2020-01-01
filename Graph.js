@@ -169,7 +169,7 @@ let Graph = function (order = 0) {
 };
 
 //test
-
+/*
 let graph = new Graph();
 
 graph.setVertex("A", "B", "C", "D");
@@ -190,4 +190,4 @@ graph.depthFirstSearch(function (element) {
     a += element + " ";
     return false;
 });
-console.log(a);
+console.log(a);*/
