@@ -253,47 +253,7 @@ let DoublyLinkedList = function () {
 
 };
 
-/*//test
-let doublyLinkedList = new DoublyLinkedList(), obj = {};
-doublyLinkedList.insert(22);
-doublyLinkedList.insert(33);
-doublyLinkedList.insert(44);
-doublyLinkedList.insert(55);
-doublyLinkedList.insert(66);
-doublyLinkedList.insert(77);
-doublyLinkedList.insert(88, 1);
-doublyLinkedList.insert(obj);
-doublyLinkedList.insert(obj);
 
-
-doublyLinkedList.removeAt(0);
-doublyLinkedList.removeAt(0);
-
-
-doublyLinkedList.remove(obj);
-doublyLinkedList.remove(44);
-
-console.log(doublyLinkedList);
-
-console.log(doublyLinkedList.get(0));
-console.log(doublyLinkedList.get(1));
-console.log(doublyLinkedList.get(2));
-
-console.log(doublyLinkedList.getForward(0));
-console.log(doublyLinkedList.getForward(1));
-console.log(doublyLinkedList.getForward(2));
-
-doublyLinkedList.update(12, 0);
-doublyLinkedList.update(34, 1);
-
-doublyLinkedList.updateForward(56, 0);
-
-doublyLinkedList.indexOf(12);
-doublyLinkedList.indexOfForward(34);
-
-console.log(doublyLinkedList.size());
-
-console.log(doublyLinkedList);*/
 
 
 

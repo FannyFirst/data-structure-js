@@ -168,26 +168,4 @@ let Graph = function (order = 0) {
 
 };
 
-//test
-/*
-let graph = new Graph();
 
-graph.setVertex("A", "B", "C", "D");
-graph.setVertex("B", "A", "F", "G");
-graph.setVertex("C", "G", "H", "D");
-graph.setVertex("D", "Z", "Q", "R");
-graph.setVertex("Z", "R", "B", "A");
-graph.setVertex("R", "C", "Q", "D");
-
-let a = "";
-graph.breadFirstSearch(function (element) {
-    a += element + " ";
-    return false;
-}, 'A');
-console.log(a);
-a = "";
-graph.depthFirstSearch(function (element) {
-    a += element + " ";
-    return false;
-});
-console.log(a);*/

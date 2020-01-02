@@ -115,19 +115,3 @@ Array.prototype.quickSort = function () {
 
 
 };
-
-
-let test = [], time;
-for (let i = 0; i < 10000000; i++) {
-    test[i] = Math.floor(Math.random() * 10000000);
-}
-time = new Date().getTime();
-console.log("Starting Time:" + time / 1000 + "s");
-console.log(test);
-// test.bubbleSort();      //       100,000             15s
-// test.selectionSort();   //       100,000              3s
-// test.insertionSort();   //       100,000             2.5s
-// test.shellSort();             //       10,000,000        17.845s
-test.quickSort();             //       10,000,000        6s -8s
-console.log("End Time:" + (new Date().getTime() - time) / 1000 + "s");
-console.log(test);

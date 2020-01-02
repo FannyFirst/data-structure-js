@@ -130,30 +130,4 @@ let LinkedList = function () {
     }
 };
 
-//test
 
-/*let linkedlist = new LinkedList();
-linkedlist.append(1);
-linkedlist.append(2);
-linkedlist.append(3);
-linkedlist.append(4);
-linkedlist.append(5);
-console.log(linkedlist);
-
-linkedlist.removeAt(0);
-linkedlist.removeAt(1);
-console.log(linkedlist);
-
-linkedlist.remove(3);
-console.log(linkedlist);
-
-linkedlist.insert(10, 2);
-console.log(linkedlist);
-
-console.log(linkedlist.get(2));
-
-linkedlist.update(2,15);
-console.log(linkedlist);
-
-console.log(linkedlist.indexOf(15));
-console.log(linkedlist.size());*/

@@ -216,35 +216,3 @@ let HashTable = function () {
         return false;
     }
 };
-
-
-/*//test
-
-/!*console.log(math.nearPrimeNumber(129));
-console.log(math.primeNumber);*!/
-
-//hashTable
-
-let hashTab = new HashTable();
-hashTab.put("test", "qw");
-hashTab.put("a", "asd");
-hashTab.put("s", "s");
-hashTab.put("c", "s");
-hashTab.put("gw", "as");
-hashTab.put("as", "as");
-hashTab.put("faw", "as");
-hashTab.put("tykpo", "as");
-hashTab.put("466", "as");
-hashTab.put("j3q4i2h", "as");
-hashTab.put("qera;mkgqo5uo", "as");
-hashTab.put("qw4etrg59+", "as");
-hashTab.put(null, "a");
-hashTab.put("qwed", "a");
-console.log(hashTab);
-
-console.log(hashTab.get("qwed"));
-console.log(hashTab.get("tykpo"));
-
-console.log(hashTab.remove("qera;mkgqo5uo"));
-
-console.log(hashTab);*/
